@@ -21,8 +21,8 @@ pygame.display.set_icon(icon)
 
 window.blit(intro_img, (width // 2 - intro_img.get_width() // 2, height // 2 - intro_img.get_height() // 2))
 pygame.display.update()
-# pygame.mixer.Sound.play(intro_music)
-# pygame.time.delay(5000)
+pygame.mixer.Sound.play(intro_music)
+pygame.time.delay(5000)
 
 quit_img_loc = (play_img.get_width(), 500)
 play_img_loc = (0, 500)
@@ -49,7 +49,7 @@ play_txt_rect.center = (300, 560)
 quit_txt_rect.center = (900, 560)
 
 def game_window():
-    # pygame.mixer.Sound.play(start_music)
+    pygame.mixer.Sound.play(start_music)
     running = True
     while running:
         window.fill((0, 0, 0))
