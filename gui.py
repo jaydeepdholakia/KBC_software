@@ -12,16 +12,15 @@ pygame.display.set_caption("Kaun Banega Crorepati")
 icon = pygame.image.load("images/logo.png")
 intro_img = pygame.image.load("images/intro.jpeg")
 intro_music = pygame.mixer.Sound("audio/intro.ogg")
+start_music = pygame.mixer.Sound("audio/start.ogg")
 play_img = pygame.image.load("images/play.png")
 quit_img = pygame.image.load("images/quit.png")
 pygame.display.set_icon(icon)
 
 window.blit(intro_img, (width // 2 - intro_img.get_width() // 2, height // 2 - intro_img.get_height() // 2))
-window.blit(quit_img, (play_img.get_width(), 500))
-window.blit(play_img, (0, 500))
 pygame.display.update()
-# pygame.mixer.Sound.play(intro_music)
-# pygame.time.delay(5000)
+pygame.mixer.Sound.play(intro_music)
+pygame.time.delay(5000)
 
 quit_img_loc = (play_img.get_width(), 500)
 play_img_loc = (0, 500)
@@ -47,29 +46,30 @@ quit_txt_rect = quit_txt.get_rect()
 play_txt_rect.center = (300, 560)
 quit_txt_rect.center = (900, 560)
 
-while running:
-    window.blit(quit_img, quit_img_loc)
-    window.blit(play_img, play_img_loc)
-    window.blit(play_txt, play_txt_rect)
-    window.blit(quit_txt, quit_txt_rect)
+def start_window():
+    running = True
+    while running:
+        window.blit(quit_img, quit_img_loc)
+        window.blit(play_img, play_img_loc)
+        window.blit(play_txt, play_txt_rect)
+        window.blit(quit_txt, quit_txt_rect)
 
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            pos = pygame.mouse.get_pos()
-
-            print(pos)
-            print(play_img_loc)
-
-            if is_over(pos, play_img_loc, play_img.get_size(), 60):
-                print("Start")
-
-            if is_over(pos, quit_img_loc, quit_img.get_size(), 60):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
                 running = False
 
-            
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
 
-    pygame.display.update()
+                if is_over(pos, play_img_loc, play_img.get_size(), 60):
+                    pygame.mixer.Sound.play(start_music)
+                    print("Start")
+
+                if is_over(pos, quit_img_loc, quit_img.get_size(), 60):
+                    running = False
+
+        pygame.display.update()
+
+
+start_window()
