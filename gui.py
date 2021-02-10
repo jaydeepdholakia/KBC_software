@@ -17,9 +17,17 @@ play_img = pygame.image.load("images/play.png")
 quit_img = pygame.image.load("images/quit.png")
 quit_img_over = pygame.image.load("images/quit_over.png")
 play_img_over = pygame.image.load("images/quit_over.png")
+game_bg_img = pygame.image.load("images/bg.png")
+question_img = pygame.image.load("images/question.png")
+
+opt_a_img = pygame.image.load("images/opt_l.png")
+opt_b_img = pygame.image.load("images/opt_r.png")
+opt_c_img = pygame.image.load("images/opt_l.png")
+opt_d_img = pygame.image.load("images/opt_r.png")
+
 pygame.display.set_icon(icon)
 
-# window.blit(intro_img, (width // 2 - intro_img.get_width() // 2, height // 2 - intro_img.get_height() // 2))
+# window.blit(intro_img, (0, 0))
 # pygame.display.update()
 # pygame.mixer.Sound.play(intro_music)
 # pygame.time.delay(5000)
@@ -49,10 +57,16 @@ play_txt_rect.center = (300, 560)
 quit_txt_rect.center = (900, 560)
 
 def game_window():
-    pygame.mixer.Sound.play(start_music)
+    # pygame.mixer.Sound.play(start_music)
     running = True
     while running:
-        window.fill((0, 0, 0))
+        window.blit(game_bg_img, (0, 0))
+        window.blit(question_img, (0, 200))
+        window.blit(opt_a_img, (0, 400))
+        window.blit(opt_b_img, (600, 400))
+        window.blit(opt_c_img, (0, 500))
+        window.blit(opt_d_img, (600, 500))
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
