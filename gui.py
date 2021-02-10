@@ -13,6 +13,8 @@ icon = pygame.image.load("images/logo.png")
 intro_img = pygame.image.load("images/intro.jpeg")
 intro_music = pygame.mixer.Sound("audio/intro.ogg")
 start_music = pygame.mixer.Sound("audio/start.ogg")
+lock_music = pygame.mixer.Sound("audio/lock.ogg")
+
 play_img = pygame.image.load("images/play.png")
 quit_img = pygame.image.load("images/quit.png")
 quit_img_over = pygame.image.load("images/quit_over.png")
@@ -147,7 +149,8 @@ def lock(opt):
         window.blit(temp_opt_char, opt_d_char_txt_rect)
     
     pygame.display.update()
-    pygame.time.delay(1000)
+    pygame.mixer.Sound.play(lock_music)
+    pygame.time.delay(3000)
 
 def game_window():
     
