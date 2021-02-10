@@ -165,6 +165,10 @@ def check(opt, ans):
     pygame.display.update()
     pygame.time.delay(3000)
 
+    if opt != ans:
+        return False
+    return True
+
 
     
 
@@ -218,7 +222,7 @@ def game_window():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                exit()
 
             pos = pygame.mouse.get_pos()
 
@@ -227,22 +231,23 @@ def game_window():
                 if is_over(pos, opt_a_img_loc, opt_a_img.get_size(), 55):
                     print("Option A")
                     lock('a')
-                    check('a', 'b')
+                    running = check('a', 'b')
 
                 if is_over(pos, opt_b_img_loc, opt_b_img.get_size(), 55):
                     print("Option B")
                     lock('b')
-                    check('b', 'b')
+                    running = check('b', 'b')
 
                 if is_over(pos, opt_c_img_loc, opt_c_img.get_size(), 55):
                     print("Option C")
                     lock('c')
-                    check('c', 'c')
+                    running = check('c', 'c')
 
                 if is_over(pos, opt_d_img_loc, opt_d_img.get_size(), 55):
                     print("Option D")
                     lock('d')
-                    check('d', 'd')
+                    running = check('d', 'd')
+                
 
         pygame.display.update()
 
@@ -250,6 +255,7 @@ def game_window():
 def start_window():
     pos = (0, 0)
     while True:
+        window.blit(intro_img, (0, 0)) 
         window.blit(quit_img, quit_img_loc)
         window.blit(play_img, play_img_loc)
 
@@ -262,7 +268,7 @@ def start_window():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                return 0
+                exit()
 
             pos = pygame.mouse.get_pos()
 
@@ -271,7 +277,6 @@ def start_window():
                 if is_over(pos, play_img_loc, play_img.get_size(), 60):
                     print("Start")
                     game_window()
-                    return 0
 
                 if is_over(pos, quit_img_loc, quit_img.get_size(), 60):
                     return 0
