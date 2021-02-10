@@ -48,15 +48,57 @@ def is_over(pos, up, down, trim):
 white = (255, 255, 255)
 green = (0, 255, 0)
 blue = (0, 0, 128)
-font = pygame.font.Font('fonts/RobotoSlab-Medium.ttf', 80)
-play_txt = font.render('Play', True, white)
-quit_txt = font.render('Quit', True, white)
+gold = (218,165,32)
+intro_font = pygame.font.Font('fonts/RobotoSlab-Medium.ttf', 80)
+question_font = pygame.font.Font('fonts/RobotoSlab-Medium.ttf', 30)
+opt_char_font = pygame.font.Font('fonts/RobotoSlab-SemiBold.ttf', 40)
+opt_font = pygame.font.Font('fonts/RobotoSlab-Medium.ttf', 35)
+play_txt = intro_font.render('Play', True, white)
+quit_txt = intro_font.render('Quit', True, white)
 play_txt_rect = play_txt.get_rect()
 quit_txt_rect = quit_txt.get_rect()
 play_txt_rect.center = (300, 560)
 quit_txt_rect.center = (900, 560)
 
 def game_window():
+    global question_font
+    global opt_char_font
+    global opt_font
+
+    opt_a_char_txt = opt_char_font.render("A:", True, gold)
+    opt_b_char_txt = opt_char_font.render("B:", True, gold)
+    opt_c_char_txt = opt_char_font.render("C:", True, gold)
+    opt_d_char_txt = opt_char_font.render("D:", True, gold)
+
+    opt_a_char_txt_rect = opt_a_char_txt.get_rect()
+    opt_b_char_txt_rect = opt_b_char_txt.get_rect()
+    opt_c_char_txt_rect = opt_c_char_txt.get_rect()
+    opt_d_char_txt_rect = opt_d_char_txt.get_rect()
+
+    opt_a_char_txt_rect.center = (120, 435)
+    opt_b_char_txt_rect.center = (680, 435)
+    opt_c_char_txt_rect.center = (120, 540)
+    opt_d_char_txt_rect.center = (680, 540)
+
+    question_txt = question_font.render('Yeah its not necessary if you have two nested loop then the time ', True, white)
+    opt_a_txt = opt_font.render('Opthion A', True, white)
+    opt_b_txt = opt_font.render('Opthion B', True, white)
+    opt_c_txt = opt_font.render('Opthion C', True, white)
+    opt_d_txt = opt_font.render('Opthion D', True, white)
+
+    question_txt_rect = question_txt.get_rect()
+    opt_a_txt_rect = opt_a_txt.get_rect()
+    opt_b_txt_rect = opt_b_txt.get_rect()
+    opt_c_txt_rect = opt_c_txt.get_rect()
+    opt_d_txt_rect = opt_d_txt.get_rect()
+
+    question_txt_rect.center = (610, 250)
+    opt_a_txt_rect.center = (235, 435)
+    opt_b_txt_rect.center = (790, 435)
+    opt_c_txt_rect.center = (235, 540)
+    opt_d_txt_rect.center = (790, 540)
+
+
     # pygame.mixer.Sound.play(start_music)
     running = True
     while running:
@@ -66,6 +108,17 @@ def game_window():
         window.blit(opt_b_img, (600, 400))
         window.blit(opt_c_img, (0, 500))
         window.blit(opt_d_img, (600, 500))
+
+        window.blit(question_txt, question_txt_rect)
+        window.blit(opt_a_txt, opt_a_txt_rect)
+        window.blit(opt_b_txt, opt_b_txt_rect)
+        window.blit(opt_c_txt, opt_c_txt_rect)
+        window.blit(opt_d_txt, opt_d_txt_rect)
+
+        window.blit(opt_a_char_txt, opt_a_char_txt_rect)
+        window.blit(opt_b_char_txt, opt_b_char_txt_rect)
+        window.blit(opt_c_char_txt, opt_c_char_txt_rect)
+        window.blit(opt_d_char_txt, opt_d_char_txt_rect)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
