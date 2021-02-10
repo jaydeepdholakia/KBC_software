@@ -19,10 +19,10 @@ quit_img_over = pygame.image.load("images/quit_over.png")
 play_img_over = pygame.image.load("images/quit_over.png")
 pygame.display.set_icon(icon)
 
-window.blit(intro_img, (width // 2 - intro_img.get_width() // 2, height // 2 - intro_img.get_height() // 2))
-pygame.display.update()
-pygame.mixer.Sound.play(intro_music)
-pygame.time.delay(5000)
+# window.blit(intro_img, (width // 2 - intro_img.get_width() // 2, height // 2 - intro_img.get_height() // 2))
+# pygame.display.update()
+# pygame.mixer.Sound.play(intro_music)
+# pygame.time.delay(5000)
 
 quit_img_loc = (play_img.get_width(), 500)
 play_img_loc = (0, 500)
@@ -95,4 +95,4 @@ def start_window():
         pygame.display.update()
 
 
-start_window()
+game_window()
