@@ -44,17 +44,17 @@ opt_b_img_wrong = pygame.image.load("images/opt_r_wrong.png")
 opt_c_img_wrong = pygame.image.load("images/opt_l_wrong.png")
 opt_d_img_wrong = pygame.image.load("images/opt_r_wrong.png")
 
-opt_a_img_correct = pygame.image.load("images/opt_l_wrong.png")
-opt_b_img_correct = pygame.image.load("images/opt_r_wrong.png")
-opt_c_img_correct = pygame.image.load("images/opt_l_wrong.png")
-opt_d_img_correct = pygame.image.load("images/opt_r_wrong.png")
+opt_a_img_correct = pygame.image.load("images/opt_l_correct.png")
+opt_b_img_correct = pygame.image.load("images/opt_r_correct.png")
+opt_c_img_correct = pygame.image.load("images/opt_l_correct.png")
+opt_d_img_correct = pygame.image.load("images/opt_r_correct.png")
 
 pygame.display.set_icon(icon) 
 
-# window.blit(intro_img, (0, 0)) 
-# pygame.display.update() 
-# pygame.mixer.Sound.play(intro_music) 
-# pygame.time.delay(5000) 
+window.blit(intro_img, (0, 0)) 
+pygame.display.update() 
+pygame.mixer.Sound.play(intro_music) 
+pygame.time.delay(5000) 
 
 quit_img_loc = (play_img.get_width(), 500) 
 play_img_loc = (0, 500) 
@@ -141,17 +141,32 @@ lock_data = {
 }
 
 def check(opt, ans):
+    correct_opt_char = opt_char_font.render(opt.upper() + ":", True, grey)
+    correct_txt = opt_font.render(lock_data[opt][0], True, black)
+
+    wrong_opt_char = opt_char_font.render(ans.upper() + ":", True, gold)
+    wrong_txt = opt_font.render(lock_data[ans][0], True, white)
+
     if opt == ans:
-        temp_opt_char = opt_char_font.render(opt.upper() + ":", True, gold)
-
-        temp_txt = opt_font.render(lock_data[opt][0], True, white)
         window.blit(lock_data[opt][3], lock_data[opt][4])
-        window.blit(temp_txt, lock_data[opt][5])
-        window.blit(temp_opt_char, lock_data[opt][6])
+        window.blit(correct_txt, lock_data[opt][5])
+        window.blit(correct_opt_char, lock_data[opt][6])
+    
+    else:
+        window.blit(lock_data[opt][2], lock_data[opt][4])
+        window.blit(lock_data[ans][3], lock_data[ans][4])
+        window.blit(correct_txt, lock_data[ans][5])
+        window.blit(correct_opt_char, lock_data[ans][6])
+        window.blit(wrong_txt, lock_data[opt][5])
+        window.blit(wrong_opt_char, lock_data[opt][6])
 
-        pygame.display.update()
         pygame.mixer.Sound.play(wrong_music)
-        pygame.time.delay(3000)
+
+    pygame.display.update()
+    pygame.time.delay(3000)
+
+
+    
 
 def lock(opt):
     temp_opt_char = opt_char_font.render(opt.upper() + ":", True, grey)
@@ -168,7 +183,7 @@ def lock(opt):
 def game_window():
     
     pos = (0, 0)
-    # pygame.mixer.Sound.play(start_music)
+    pygame.mixer.Sound.play(start_music)
     running = True
     while running:
         window.blit(game_bg_img, (0, 0))
@@ -212,7 +227,7 @@ def game_window():
                 if is_over(pos, opt_a_img_loc, opt_a_img.get_size(), 55):
                     print("Option A")
                     lock('a')
-                    check('a', 'a')
+                    check('a', 'b')
 
                 if is_over(pos, opt_b_img_loc, opt_b_img.get_size(), 55):
                     print("Option B")
@@ -229,9 +244,6 @@ def game_window():
                     lock('d')
                     check('d', 'd')
 
-        
-
-    
         pygame.display.update()
 
 
@@ -270,4 +282,4 @@ def start_window():
         pygame.display.update()
 
 
-game_window()
+start_window()
