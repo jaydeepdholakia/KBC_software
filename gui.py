@@ -89,9 +89,10 @@ black = (0, 0, 0)
 grey = (90, 90, 90)
 intro_font = pygame.font.Font('fonts/RobotoSlab-Medium.ttf', 80)
 question_font = pygame.font.Font('fonts/RobotoSlab-Medium.ttf', 30)
-money_font = pygame.font.Font('fonts/test.ttf', 30)
+money_font = pygame.font.Font('fonts/RobotoSlab-Medium.ttf', 30)
 opt_char_font = pygame.font.Font('fonts/RobotoSlab-SemiBold.ttf', 40)
 opt_font = pygame.font.Font('fonts/RobotoSlab-Medium.ttf', 35)
+rupee_font = pygame.font.Font('fonts/Indian Rupee.ttf', 30)
 play_txt = intro_font.render('Play', True, white)
 quit_txt = intro_font.render('Quit', True, white)
 play_txt_rect = play_txt.get_rect()
@@ -108,8 +109,9 @@ def update():
     global opt_a_char_txt, opt_b_char_txt, opt_c_char_txt, opt_d_char_txt
     global opt_a_char_txt_rect, opt_b_char_txt_rect, opt_c_char_txt_rect, opt_d_char_txt_rect
     global question, opt_a, opt_b, opt_c, opt_d, answer, opt_data, question_no, difficulty, money
-    global question_txt, question_txt_1, question_txt_2, opt_a_txt, opt_b_txt, opt_c_txt, opt_d_txt, money_txt
-    global question_txt_rect, question_txt_1_rect, question_txt_2_rect, opt_a_txt_rect, opt_b_txt_rect, opt_c_txt_rect, opt_d_txt_rect, money_txt_rect
+    global question_txt, question_txt_1, question_txt_2, opt_a_txt, opt_b_txt, opt_c_txt, opt_d_txt, money_txt, rupee_txt
+    global question_txt_rect, question_txt_1_rect, question_txt_2_rect, opt_a_txt_rect, opt_b_txt_rect
+    global opt_c_txt_rect, opt_d_txt_rect, money_txt_rect, rupee_txt_rect
 
     opt_a_char_txt = opt_char_font.render("A:", True, gold)
     opt_b_char_txt = opt_char_font.render("B:", True, gold)
@@ -149,6 +151,11 @@ def update():
     opt_c_txt = opt_font.render(opt_c, True, white)
     opt_d_txt = opt_font.render(opt_d, True, white)
     money_txt = money_font.render(money, True, white)
+    rupee_txt = rupee_font.render("₹", True, white)
+    if question_no > 15:
+        money_txt = money_font.render(money, True, gold)
+        rupee_txt = rupee_font.render("₹", True, gold)
+        
 
     if len(question) == 1:
         question_txt_rect = question_txt.get_rect()
@@ -161,6 +168,7 @@ def update():
     opt_c_txt_rect = opt_c_txt.get_rect()
     opt_d_txt_rect = opt_d_txt.get_rect()
     money_txt_rect = money_txt.get_rect()
+    rupee_txt_rect = rupee_txt.get_rect()
 
     if len(question) == 1:
         question_txt_rect.center = (610, 260)
@@ -172,7 +180,8 @@ def update():
     opt_b_txt_rect.center = (705 + opt_b_txt_rect.width // 2, 435)
     opt_c_txt_rect.center = (150 + opt_c_txt_rect.width // 2, 540)
     opt_d_txt_rect.center = (705 + opt_d_txt_rect.width // 2, 540)
-    money_txt_rect.center = (1050, 95)
+    money_txt_rect.center = (990 + money_txt_rect.width // 2, 95)
+    rupee_txt_rect.center = (1000, 100)
 
     opt_data = {
         "a": [opt_a, opt_a_img_lock, opt_a_img_wrong, opt_a_img_correct, opt_a_img_loc, opt_a_txt_rect, opt_a_char_txt_rect],
@@ -248,7 +257,7 @@ def game_window():
     while running:
         window.blit(game_bg_img, (0, 0))
         window.blit(question_img, (0, 200))
-        window.blit(money_img, (765, 70))
+        window.blit(money_img, (890, 70))
 
         window.blit(opt_a_img, opt_a_img_loc)
         window.blit(opt_b_img, opt_b_img_loc)
@@ -278,6 +287,7 @@ def game_window():
         window.blit(opt_c_txt, opt_c_txt_rect)
         window.blit(opt_d_txt, opt_d_txt_rect)
         window.blit(money_txt, money_txt_rect)
+        window.blit(rupee_txt, rupee_txt_rect)
 
         window.blit(opt_a_char_txt, opt_a_char_txt_rect)
         window.blit(opt_b_char_txt, opt_b_char_txt_rect)
