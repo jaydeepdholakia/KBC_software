@@ -97,8 +97,8 @@ def update():
     global opt_a_char_txt, opt_b_char_txt, opt_c_char_txt, opt_d_char_txt
     global opt_a_char_txt_rect, opt_b_char_txt_rect, opt_c_char_txt_rect, opt_d_char_txt_rect
     global question, opt_a, opt_b, opt_c, opt_d, answer, opt_data
-    global question_txt, opt_a_txt, opt_b_txt, opt_c_txt, opt_d_txt
-    global question_txt_rect, opt_a_txt_rect, opt_b_txt_rect, opt_c_txt_rect, opt_d_txt_rect
+    global question_txt, question_txt_1, question_txt_2, opt_a_txt, opt_b_txt, opt_c_txt, opt_d_txt
+    global question_txt_rect, question_txt_1_rect, question_txt_2_rect, opt_a_txt_rect, opt_b_txt_rect, opt_c_txt_rect, opt_d_txt_rect
 
     opt_a_char_txt = opt_char_font.render("A:", True, gold)
     opt_b_char_txt = opt_char_font.render("B:", True, gold)
@@ -125,19 +125,34 @@ def update():
     answer = quiz_data['correct_option']
     print(answer)
 
-    question_txt = question_font.render(question, True, white)
+    if len(question) == 1:
+        question_txt = question_font.render(question[0], True, white)
+    else:
+        question_txt_1 = question_font.render(question[0], True, white)
+        question_txt_2 = question_font.render(question[1], True, white)
+
     opt_a_txt = opt_font.render(opt_a, True, white) 
     opt_b_txt = opt_font.render(opt_b, True, white) 
     opt_c_txt = opt_font.render(opt_c, True, white) 
     opt_d_txt = opt_font.render(opt_d, True, white) 
 
-    question_txt_rect = question_txt.get_rect() 
+    if len(question) == 1:
+        question_txt_rect = question_txt.get_rect() 
+    else:
+        question_txt_1_rect = question_txt_1.get_rect()
+        question_txt_2_rect = question_txt_2.get_rect()
+
     opt_a_txt_rect = opt_a_txt.get_rect() 
     opt_b_txt_rect = opt_b_txt.get_rect() 
     opt_c_txt_rect = opt_c_txt.get_rect() 
     opt_d_txt_rect = opt_d_txt.get_rect() 
 
-    question_txt_rect.center = (610, 250) 
+    if len(question) == 1:
+        question_txt_rect.center = (610, 260) 
+    else:
+        question_txt_1_rect.center = (610, 235)
+        question_txt_2_rect.center = (610, 280)
+
     opt_a_txt_rect.center = (150 + opt_a_txt_rect.width // 2, 435)
     opt_b_txt_rect.center = (705 + opt_b_txt_rect.width // 2, 435)
     opt_c_txt_rect.center = (150 + opt_c_txt_rect.width // 2, 540)
@@ -223,7 +238,12 @@ def game_window():
         if is_over(pos, opt_d_img_loc, opt_d_img.get_size(), 55):
             window.blit(opt_d_img_over, opt_d_img_loc)
 
-        window.blit(question_txt, question_txt_rect)
+        if len(question) == 1:
+            window.blit(question_txt, question_txt_rect)
+        else:
+            window.blit(question_txt_1, question_txt_1_rect)
+            window.blit(question_txt_2, question_txt_2_rect)
+
         window.blit(opt_a_txt, opt_a_txt_rect)
         window.blit(opt_b_txt, opt_b_txt_rect)
         window.blit(opt_c_txt, opt_c_txt_rect)
@@ -243,22 +263,18 @@ def game_window():
             if event.type == pygame.MOUSEBUTTONDOWN:
 
                 if is_over(pos, opt_a_img_loc, opt_a_img.get_size(), 55):
-                    print("Option A")
                     lock('a')
                     running = check('a', answer)
 
                 if is_over(pos, opt_b_img_loc, opt_b_img.get_size(), 55):
-                    print("Option B")
                     lock('b')
                     running = check('b', answer)
 
                 if is_over(pos, opt_c_img_loc, opt_c_img.get_size(), 55):
-                    print("Option C")
                     lock('c')
                     running = check('c', answer)
 
                 if is_over(pos, opt_d_img_loc, opt_d_img.get_size(), 55):
-                    print("Option D")
                     lock('d')
                     running = check('d', answer)
                 
