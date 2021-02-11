@@ -201,12 +201,14 @@ def check(opt, ans):
         window.blit(wrong_txt, opt_data[opt][5])
         window.blit(wrong_opt_char, opt_data[ans][6])
         question_no = 1
+        difficulty = 0
         pygame.mixer.Sound.play(wrong_music)
 
         pygame.display.update()
         pygame.time.delay(3000)
 
     if opt != ans:
+        update()
         return False
 
     update()
