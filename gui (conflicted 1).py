@@ -89,6 +89,10 @@ quit_txt_rect = quit_txt.get_rect()
 play_txt_rect.center = (300, 560)
 quit_txt_rect.center = (900, 560)
 
+# window.blit(intro_img, (0, 0))
+# pygame.display.update()
+# pygame.mixer.Sound.play(intro_music)
+# pygame.time.delay(6500)
 
 # This function tell if the mouse is over any button or image
 def is_over(pos, up, down, trim):
@@ -148,16 +152,14 @@ def update():
     answer = quiz_data['correct_option']
     money = money_list[question_no-1]
 
-    print(question_no, answer, difficulty)  # print answer for easier running while testing
+    print(question_no, answer, difficulty)  #
 
-    # This the question wrapping logic
     if len(question) == 1:
         question_txt = question_font.render(question[0], True, white)
     else:
         question_txt_1 = question_font.render(question[0], True, white)
         question_txt_2 = question_font.render(question[1], True, white)
 
-    # Render and initialise the money text
     opt_a_txt = opt_font.render(opt_a, True, white)
     opt_b_txt = opt_font.render(opt_b, True, white)
     opt_c_txt = opt_font.render(opt_c, True, white)
@@ -168,12 +170,13 @@ def update():
         money_txt = money_font.render(money, True, gold)
         rupee_txt = rupee_font.render("₹", True, gold)
         
-    # Getting the rect properies of the rendered text for positioning on the display
+
     if len(question) == 1:
         question_txt_rect = question_txt.get_rect()
     else:
         question_txt_1_rect = question_txt_1.get_rect()
         question_txt_2_rect = question_txt_2.get_rect()
+
     opt_a_txt_rect = opt_a_txt.get_rect()
     opt_b_txt_rect = opt_b_txt.get_rect()
     opt_c_txt_rect = opt_c_txt.get_rect()
@@ -181,12 +184,12 @@ def update():
     money_txt_rect = money_txt.get_rect()
     rupee_txt_rect = rupee_txt.get_rect()
 
-    # Set the location of the text
     if len(question) == 1:
         question_txt_rect.center = (610, 260)
     else:
         question_txt_1_rect.center = (610, 235)
         question_txt_2_rect.center = (610, 280)
+
     opt_a_txt_rect.center = (150 + opt_a_txt_rect.width // 2, 435)
     opt_b_txt_rect.center = (705 + opt_b_txt_rect.width // 2, 435)
     opt_c_txt_rect.center = (150 + opt_c_txt_rect.width // 2, 540)
@@ -194,7 +197,6 @@ def update():
     money_txt_rect.center = (990 + money_txt_rect.width // 2, 95)
     rupee_txt_rect.center = (1000, 100)
 
-    # this dictionalry is useful in lock and check function
     opt_data = {
         "a": [opt_a, opt_a_img_lock, opt_a_img_wrong, opt_a_img_correct, opt_a_img_loc, opt_a_txt_rect, opt_a_char_txt_rect],
         "b": [opt_b, opt_b_img_lock, opt_b_img_wrong, opt_b_img_correct, opt_b_img_loc, opt_b_txt_rect, opt_b_char_txt_rect],
@@ -202,80 +204,69 @@ def update():
         "d": [opt_d, opt_d_img_lock, opt_d_img_wrong, opt_d_img_correct, opt_d_img_loc, opt_d_txt_rect, opt_d_char_txt_rect]
     }
     
-# calling update to initialise everything in the startup
+
+
 update()
 
-# This function check if your answer was correct or wrong and do stuff accordingly
+
 def check(opt, ans):
     global question_no, difficulty
-
     correct_opt_char = opt_char_font.render(opt.upper() + ":", True, grey)
     correct_txt = opt_font.render(opt_data[opt][0], True, black)
+
     wrong_opt_char = opt_char_font.render(ans.upper() + ":", True, gold)
     wrong_txt = opt_font.render(opt_data[ans][0], True, white)
 
-    # here if your ans matches with actual ans we call this if
     if opt == ans:
-        # cheange the colour of the option to green
         window.blit(opt_data[opt][3], opt_data[opt][4])
         window.blit(correct_txt, opt_data[opt][5])
         window.blit(correct_opt_char, opt_data[opt][6])
-
-        question_no += 1    # increase the question no
-        # here increase the difficulty when reacing the thrushold
+        question_no += 1
+        print(question_no)
         if question_no == 6:
             difficulty = 1
         if question_no == 11:
             difficulty = 2
 
-        # now play the correct music, update the window and wait for 1 sec
         pygame.mixer.Sound.play(correct_music)
         pygame.display.update()
         pygame.time.delay(1000)
 
-    # this else is called when ans dont match
     else:
-        # cheange the colour of your option to red and correct with green 
         window.blit(opt_data[opt][2], opt_data[opt][4])
         window.blit(opt_data[ans][3], opt_data[ans][4])
         window.blit(correct_txt, opt_data[ans][5])
         window.blit(correct_opt_char, opt_data[opt][6])
         window.blit(wrong_txt, opt_data[opt][5])
         window.blit(wrong_opt_char, opt_data[ans][6])
-
-        # reset everyting
         question_no = 1
         difficulty = 0
-
-        # now play the wrong music, update the window and wait for 3 sec
         pygame.mixer.Sound.play(wrong_music)
+
         pygame.display.update()
         pygame.time.delay(3000)
 
-    # this returns is for game window function
     if opt != ans:
         update()
         return False
+
     update()
     return True
 
 
-# This function is called you click on an option and that option gets locked
 def lock(opt):
-    # change the option color to yellow
     temp_opt_char = opt_char_font.render(opt.upper() + ":", True, grey)
+
     temp_txt = opt_font.render(opt_data[opt][0], True, black)
     window.blit(opt_data[opt][1], opt_data[opt][4])
     window.blit(temp_txt, opt_data[opt][5])
     window.blit(temp_opt_char, opt_data[opt][6])
 
-    # play the lock music, update the window and wait for 3 sec
     pygame.display.update()
     pygame.mixer.Sound.play(lock_music)
     pygame.time.delay(3000)
 
 
-# This is the function which whow everythin in the main game window
 def game_window():
     pos = (0, 0)
     pygame.mixer.Sound.play(start_music)
@@ -347,7 +338,6 @@ def game_window():
         pygame.display.update()
 
 
-# This the function which show the starting screen (Play, Quit)
 def start_window():
     pos = (0, 0)
     update()
@@ -375,18 +365,12 @@ def start_window():
                     game_window()
 
                 if is_over(pos, quit_img_loc, quit_img.get_size(), 60):
-                    exit()
+                    return 0
 
         window.blit(play_txt, play_txt_rect)
         window.blit(quit_txt, quit_txt_rect)
 
         pygame.display.update()
 
-# Roll the inro in the startup 
-window.blit(intro_img, (0, 0))
-pygame.display.update()
-pygame.mixer.Sound.play(intro_music)
-pygame.time.delay(6000)
 
-# start the game
 start_window()

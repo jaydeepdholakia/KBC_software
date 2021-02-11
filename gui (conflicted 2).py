@@ -89,6 +89,10 @@ quit_txt_rect = quit_txt.get_rect()
 play_txt_rect.center = (300, 560)
 quit_txt_rect.center = (900, 560)
 
+# window.blit(intro_img, (0, 0))
+# pygame.display.update()
+# pygame.mixer.Sound.play(intro_music)
+# pygame.time.delay(6500)
 
 # This function tell if the mouse is over any button or image
 def is_over(pos, up, down, trim):
@@ -216,7 +220,7 @@ def check(opt, ans):
 
     # here if your ans matches with actual ans we call this if
     if opt == ans:
-        # cheange the colour of the option to green
+        # cheange the colour of the optio to green
         window.blit(opt_data[opt][3], opt_data[opt][4])
         window.blit(correct_txt, opt_data[opt][5])
         window.blit(correct_opt_char, opt_data[opt][6])
@@ -228,54 +232,46 @@ def check(opt, ans):
         if question_no == 11:
             difficulty = 2
 
-        # now play the correct music, update the window and wait for 1 sec
+        # now play the correct music, update the window and 
         pygame.mixer.Sound.play(correct_music)
         pygame.display.update()
         pygame.time.delay(1000)
 
-    # this else is called when ans dont match
     else:
-        # cheange the colour of your option to red and correct with green 
         window.blit(opt_data[opt][2], opt_data[opt][4])
         window.blit(opt_data[ans][3], opt_data[ans][4])
         window.blit(correct_txt, opt_data[ans][5])
         window.blit(correct_opt_char, opt_data[opt][6])
         window.blit(wrong_txt, opt_data[opt][5])
         window.blit(wrong_opt_char, opt_data[ans][6])
-
-        # reset everyting
         question_no = 1
         difficulty = 0
-
-        # now play the wrong music, update the window and wait for 3 sec
         pygame.mixer.Sound.play(wrong_music)
+
         pygame.display.update()
         pygame.time.delay(3000)
 
-    # this returns is for game window function
     if opt != ans:
         update()
         return False
+
     update()
     return True
 
 
-# This function is called you click on an option and that option gets locked
 def lock(opt):
-    # change the option color to yellow
     temp_opt_char = opt_char_font.render(opt.upper() + ":", True, grey)
+
     temp_txt = opt_font.render(opt_data[opt][0], True, black)
     window.blit(opt_data[opt][1], opt_data[opt][4])
     window.blit(temp_txt, opt_data[opt][5])
     window.blit(temp_opt_char, opt_data[opt][6])
 
-    # play the lock music, update the window and wait for 3 sec
     pygame.display.update()
     pygame.mixer.Sound.play(lock_music)
     pygame.time.delay(3000)
 
 
-# This is the function which whow everythin in the main game window
 def game_window():
     pos = (0, 0)
     pygame.mixer.Sound.play(start_music)
@@ -347,7 +343,6 @@ def game_window():
         pygame.display.update()
 
 
-# This the function which show the starting screen (Play, Quit)
 def start_window():
     pos = (0, 0)
     update()
@@ -375,18 +370,12 @@ def start_window():
                     game_window()
 
                 if is_over(pos, quit_img_loc, quit_img.get_size(), 60):
-                    exit()
+                    return 0
 
         window.blit(play_txt, play_txt_rect)
         window.blit(quit_txt, quit_txt_rect)
 
         pygame.display.update()
 
-# Roll the inro in the startup 
-window.blit(intro_img, (0, 0))
-pygame.display.update()
-pygame.mixer.Sound.play(intro_music)
-pygame.time.delay(6000)
 
-# start the game
 start_window()
