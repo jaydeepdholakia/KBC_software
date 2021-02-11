@@ -53,10 +53,10 @@ opt_d_img_correct = pygame.image.load("images/opt_r_correct.png")
 
 pygame.display.set_icon(icon) 
 
-# window.blit(intro_img, (0, 0)) 
-# pygame.display.update() 
-# pygame.mixer.Sound.play(intro_music) 
-# pygame.time.delay(6500) 
+window.blit(intro_img, (0, 0)) 
+pygame.display.update() 
+pygame.mixer.Sound.play(intro_music) 
+pygame.time.delay(6500) 
 
 quit_img_loc = (play_img.get_width(), 500) 
 play_img_loc = (0, 500) 
@@ -171,6 +171,7 @@ def update():
 
 
 
+update()
 
 def check(opt, ans):
     global question_no, difficulty
@@ -189,8 +190,8 @@ def check(opt, ans):
             difficulty = 1
         if question_no == 11:
             difficulty = 2
-        # pygame.display.update()
-        # pygame.time.delay(1000)
+        pygame.display.update()
+        pygame.time.delay(1000)
     
     else:
         window.blit(opt_data[opt][2], opt_data[opt][4])
@@ -200,10 +201,10 @@ def check(opt, ans):
         window.blit(wrong_txt, opt_data[opt][5])
         window.blit(wrong_opt_char, opt_data[ans][6])
         question_no = 1
-        # pygame.mixer.Sound.play(wrong_music)
+        pygame.mixer.Sound.play(wrong_music)
 
-        # pygame.display.update()
-        # pygame.time.delay(3000)
+        pygame.display.update()
+        pygame.time.delay(3000)
 
     if opt != ans:
         return False
@@ -222,14 +223,13 @@ def lock(opt):
     window.blit(temp_opt_char, opt_data[opt][6])
 
     pygame.display.update()
-    # pygame.mixer.Sound.play(lock_music)
-    # pygame.time.delay(3000)
+    pygame.mixer.Sound.play(lock_music)
+    pygame.time.delay(3000)
 
 
 def game_window():
     pos = (0, 0)
-    update()
-    # pygame.mixer.Sound.play(start_music)
+    pygame.mixer.Sound.play(start_music)
     running = True
     while running:
         window.blit(game_bg_img, (0, 0))
@@ -317,7 +317,6 @@ def start_window():
             if event.type == pygame.MOUSEBUTTONDOWN:
 
                 if is_over(pos, play_img_loc, play_img.get_size(), 60):
-                    print("Start")
                     game_window()
 
                 if is_over(pos, quit_img_loc, quit_img.get_size(), 60):
