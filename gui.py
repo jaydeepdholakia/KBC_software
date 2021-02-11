@@ -98,7 +98,7 @@ def update():
 
     global opt_a_char_txt, opt_b_char_txt, opt_c_char_txt, opt_d_char_txt
     global opt_a_char_txt_rect, opt_b_char_txt_rect, opt_c_char_txt_rect, opt_d_char_txt_rect
-    global question, opt_a, opt_b, opt_c, opt_d, answer, opt_data, question_no
+    global question, opt_a, opt_b, opt_c, opt_d, answer, opt_data, question_no, difficulty
     global question_txt, question_txt_1, question_txt_2, opt_a_txt, opt_b_txt, opt_c_txt, opt_d_txt
     global question_txt_rect, question_txt_1_rect, question_txt_2_rect, opt_a_txt_rect, opt_b_txt_rect, opt_c_txt_rect, opt_d_txt_rect
 
@@ -117,7 +117,7 @@ def update():
     opt_c_char_txt_rect.center = (120, 540) 
     opt_d_char_txt_rect.center = (680, 540) 
 
-    quiz_data = quiz.get_question(0)
+    quiz_data = quiz.get_question(difficulty)
 
     question = quiz_data['question']
     opt_a = quiz_data['options'][0]
@@ -125,7 +125,7 @@ def update():
     opt_c = quiz_data['options'][2]
     opt_d = quiz_data['options'][3]
     answer = quiz_data['correct_option']
-    print(question_no, answer)
+    print(question_no, answer, difficulty)
 
     if len(question) == 1:
         question_txt = question_font.render(question[0], True, white)
@@ -173,7 +173,7 @@ def update():
 
 
 def check(opt, ans):
-    global question_no
+    global question_no, difficulty
     correct_opt_char = opt_char_font.render(opt.upper() + ":", True, grey)
     correct_txt = opt_font.render(opt_data[opt][0], True, black)
 
@@ -185,6 +185,10 @@ def check(opt, ans):
         window.blit(correct_txt, opt_data[opt][5])
         window.blit(correct_opt_char, opt_data[opt][6])
         question_no += 1
+        if question_no == 6:
+            difficulty = 1
+        if question_no == 11:
+            difficulty = 2
         # pygame.display.update()
         # pygame.time.delay(1000)
     
@@ -325,4 +329,4 @@ def start_window():
         pygame.display.update()
 
 
-game_window()
+start_window()
