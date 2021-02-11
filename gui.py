@@ -6,6 +6,8 @@ pygame.init()
 
 width = 1200
 height = 700
+question_no = 1
+difficulty = 0
 
 window = pygame.display.set_mode((1200, 700))
 pygame.display.set_caption("Kaun Banega Crorepati")
@@ -51,10 +53,10 @@ opt_d_img_correct = pygame.image.load("images/opt_r_correct.png")
 
 pygame.display.set_icon(icon) 
 
-window.blit(intro_img, (0, 0)) 
-pygame.display.update() 
-pygame.mixer.Sound.play(intro_music) 
-pygame.time.delay(6500) 
+# window.blit(intro_img, (0, 0)) 
+# pygame.display.update() 
+# pygame.mixer.Sound.play(intro_music) 
+# pygame.time.delay(6500) 
 
 quit_img_loc = (play_img.get_width(), 500) 
 play_img_loc = (0, 500) 
@@ -96,7 +98,7 @@ def update():
 
     global opt_a_char_txt, opt_b_char_txt, opt_c_char_txt, opt_d_char_txt
     global opt_a_char_txt_rect, opt_b_char_txt_rect, opt_c_char_txt_rect, opt_d_char_txt_rect
-    global question, opt_a, opt_b, opt_c, opt_d, answer, opt_data
+    global question, opt_a, opt_b, opt_c, opt_d, answer, opt_data, question_no
     global question_txt, question_txt_1, question_txt_2, opt_a_txt, opt_b_txt, opt_c_txt, opt_d_txt
     global question_txt_rect, question_txt_1_rect, question_txt_2_rect, opt_a_txt_rect, opt_b_txt_rect, opt_c_txt_rect, opt_d_txt_rect
 
@@ -123,7 +125,7 @@ def update():
     opt_c = quiz_data['options'][2]
     opt_d = quiz_data['options'][3]
     answer = quiz_data['correct_option']
-    print(answer)
+    print(question_no, answer)
 
     if len(question) == 1:
         question_txt = question_font.render(question[0], True, white)
@@ -171,6 +173,7 @@ def update():
 
 
 def check(opt, ans):
+    global question_no
     correct_opt_char = opt_char_font.render(opt.upper() + ":", True, grey)
     correct_txt = opt_font.render(opt_data[opt][0], True, black)
 
@@ -181,8 +184,9 @@ def check(opt, ans):
         window.blit(opt_data[opt][3], opt_data[opt][4])
         window.blit(correct_txt, opt_data[opt][5])
         window.blit(correct_opt_char, opt_data[opt][6])
-        pygame.display.update()
-        pygame.time.delay(1000)
+        question_no += 1
+        # pygame.display.update()
+        # pygame.time.delay(1000)
     
     else:
         window.blit(opt_data[opt][2], opt_data[opt][4])
@@ -191,11 +195,11 @@ def check(opt, ans):
         window.blit(correct_opt_char, opt_data[opt][6])
         window.blit(wrong_txt, opt_data[opt][5])
         window.blit(wrong_opt_char, opt_data[ans][6])
+        question_no = 1
+        # pygame.mixer.Sound.play(wrong_music)
 
-        pygame.mixer.Sound.play(wrong_music)
-
-        pygame.display.update()
-        pygame.time.delay(3000)
+        # pygame.display.update()
+        # pygame.time.delay(3000)
 
     if opt != ans:
         return False
@@ -204,7 +208,6 @@ def check(opt, ans):
     return True
 
 
-    
 
 def lock(opt):
     temp_opt_char = opt_char_font.render(opt.upper() + ":", True, grey)
@@ -215,13 +218,14 @@ def lock(opt):
     window.blit(temp_opt_char, opt_data[opt][6])
 
     pygame.display.update()
-    pygame.mixer.Sound.play(lock_music)
-    pygame.time.delay(3000)
+    # pygame.mixer.Sound.play(lock_music)
+    # pygame.time.delay(3000)
+
 
 def game_window():
     pos = (0, 0)
     update()
-    pygame.mixer.Sound.play(start_music)
+    # pygame.mixer.Sound.play(start_music)
     running = True
     while running:
         window.blit(game_bg_img, (0, 0))
@@ -321,4 +325,4 @@ def start_window():
         pygame.display.update()
 
 
-start_window()
+game_window()
