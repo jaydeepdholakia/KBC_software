@@ -102,7 +102,7 @@ quit_txt_rect.center = (900, 560)
 
 money_list = ["0", "1,000", "2,000", "3,000", "5,000", "10,000", "20,000", "40,000", 
             "80,000", "160,000", "320,000", "640,000", "1,250,000", "2,500,000",
-            "5,000,000", "1 Crore", "7 Crore"]
+            "5,000,000", "1 Crore"]
 
 def update():
 
@@ -112,6 +112,12 @@ def update():
     global question_txt, question_txt_1, question_txt_2, opt_a_txt, opt_b_txt, opt_c_txt, opt_d_txt, money_txt, rupee_txt
     global question_txt_rect, question_txt_1_rect, question_txt_2_rect, opt_a_txt_rect, opt_b_txt_rect
     global opt_c_txt_rect, opt_d_txt_rect, money_txt_rect, rupee_txt_rect
+
+    if question_no == 17:
+        print("Resetting")
+        question_no = 1
+        difficulty = 0
+        start_window()
 
     opt_a_char_txt = opt_char_font.render("A:", True, gold)
     opt_b_char_txt = opt_char_font.render("B:", True, gold)
@@ -208,6 +214,7 @@ def check(opt, ans):
         window.blit(correct_txt, opt_data[opt][5])
         window.blit(correct_opt_char, opt_data[opt][6])
         question_no += 1
+        print(question_no)
         if question_no == 6:
             difficulty = 1
         if question_no == 11:
