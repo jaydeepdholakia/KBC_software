@@ -18,6 +18,7 @@ intro_music = pygame.mixer.Sound("audio/intro.ogg")
 start_music = pygame.mixer.Sound("audio/start.ogg")
 lock_music = pygame.mixer.Sound("audio/lock.ogg")
 wrong_music = pygame.mixer.Sound("audio/wrong.ogg")
+correct_music = pygame.mixer.Sound("audio/correct.ogg")
 
 play_img = pygame.image.load("images/play.png")
 quit_img = pygame.image.load("images/quit.png")
@@ -224,6 +225,8 @@ def check(opt, ans):
             difficulty = 1
         if question_no == 11:
             difficulty = 2
+
+        pygame.mixer.Sound.play(correct_music)
         pygame.display.update()
         pygame.time.delay(1000)
 
