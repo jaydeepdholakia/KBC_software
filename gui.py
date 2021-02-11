@@ -13,6 +13,7 @@ window = pygame.display.set_mode((1200, 700))
 pygame.display.set_caption("Kaun Banega Crorepati")
 icon = pygame.image.load("images/logo.png")
 intro_img = pygame.image.load("images/intro.jpeg")
+congo_img = pygame.image.load("images/cong.jpeg")
 intro_music = pygame.mixer.Sound("audio/intro.ogg")
 start_music = pygame.mixer.Sound("audio/start.ogg")
 lock_music = pygame.mixer.Sound("audio/lock.ogg")
@@ -117,6 +118,10 @@ def update():
         print("Resetting")
         question_no = 1
         difficulty = 0
+        window.blit(congo_img, (0, 0))
+        pygame.display.update()
+        pygame.mixer.Sound.play(intro_music)
+        pygame.time.delay(6500)
         start_window()
 
     opt_a_char_txt = opt_char_font.render("A:", True, gold)
@@ -195,7 +200,7 @@ def update():
         "c": [opt_c, opt_c_img_lock, opt_c_img_wrong, opt_c_img_correct, opt_c_img_loc, opt_c_txt_rect, opt_c_char_txt_rect],
         "d": [opt_d, opt_d_img_lock, opt_d_img_wrong, opt_d_img_correct, opt_d_img_loc, opt_d_txt_rect, opt_d_char_txt_rect]
     }
-    # pygame.mixer.Sound.play(start_music)
+    
 
 
 update()
@@ -231,10 +236,10 @@ def check(opt, ans):
         window.blit(wrong_opt_char, opt_data[ans][6])
         question_no = 1
         difficulty = 0
-        # pygame.mixer.Sound.play(wrong_music)
+        pygame.mixer.Sound.play(wrong_music)
 
         pygame.display.update()
-        # pygame.time.delay(3000)
+        pygame.time.delay(3000)
 
     if opt != ans:
         update()
@@ -253,13 +258,13 @@ def lock(opt):
     window.blit(temp_opt_char, opt_data[opt][6])
 
     pygame.display.update()
-    # pygame.mixer.Sound.play(lock_music)
-    # pygame.time.delay(3000)
+    pygame.mixer.Sound.play(lock_music)
+    pygame.time.delay(3000)
 
 
 def game_window():
     pos = (0, 0)
-    # pygame.mixer.Sound.play(start_music)
+    pygame.mixer.Sound.play(start_music)
     running = True
     while running:
         window.blit(game_bg_img, (0, 0))
@@ -330,7 +335,9 @@ def game_window():
 
 def start_window():
     pos = (0, 0)
+    update()
     while True:
+
         window.blit(intro_img, (0, 0))
         window.blit(quit_img, quit_img_loc)
         window.blit(play_img, play_img_loc)
@@ -361,4 +368,4 @@ def start_window():
         pygame.display.update()
 
 
-game_window()
+start_window()
