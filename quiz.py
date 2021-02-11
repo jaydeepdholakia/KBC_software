@@ -16,6 +16,7 @@ diffculty_list = [Diffculty.Easy, Diffculty.Medium, Diffculty.Hard]
 
 def get_question(diffculty):
     global options, question
+    return {'question':['asdf'], 'options': ["Asdf", "Asdf", "Aasdf", "Asfd"], 'correct_option':'d'}
     while True:
         diffculty = diffculty_list[diffculty]
         category = category_list[random.randint(0, 18)]

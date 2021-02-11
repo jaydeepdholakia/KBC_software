@@ -1,7 +1,7 @@
 import pygame
 import os
-import quiz
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
+import quiz
 pygame.init()
 
 width = 1200
@@ -30,6 +30,8 @@ opt_b_img = pygame.image.load("images/opt_r.png")
 opt_c_img = pygame.image.load("images/opt_l.png")
 opt_d_img = pygame.image.load("images/opt_r.png")
 
+money_img = pygame.image.load("images/money.png")
+
 
 opt_a_img_over = pygame.image.load("images/opt_l_over.png")
 opt_b_img_over = pygame.image.load("images/opt_r_over.png")
@@ -53,10 +55,10 @@ opt_d_img_correct = pygame.image.load("images/opt_r_correct.png")
 
 pygame.display.set_icon(icon)
 
-window.blit(intro_img, (0, 0))
-pygame.display.update()
-pygame.mixer.Sound.play(intro_music)
-pygame.time.delay(6500)
+# window.blit(intro_img, (0, 0))
+# pygame.display.update()
+# pygame.mixer.Sound.play(intro_music)
+# pygame.time.delay(6500)
 
 quit_img_loc = (play_img.get_width(), 500)
 play_img_loc = (0, 500)
@@ -204,10 +206,10 @@ def check(opt, ans):
         window.blit(wrong_opt_char, opt_data[ans][6])
         question_no = 1
         difficulty = 0
-        pygame.mixer.Sound.play(wrong_music)
+        # pygame.mixer.Sound.play(wrong_music)
 
         pygame.display.update()
-        pygame.time.delay(3000)
+        # pygame.time.delay(3000)
 
     if opt != ans:
         update()
@@ -226,17 +228,19 @@ def lock(opt):
     window.blit(temp_opt_char, opt_data[opt][6])
 
     pygame.display.update()
-    pygame.mixer.Sound.play(lock_music)
-    pygame.time.delay(3000)
+    # pygame.mixer.Sound.play(lock_music)
+    # pygame.time.delay(3000)
 
 
 def game_window():
     pos = (0, 0)
-    pygame.mixer.Sound.play(start_music)
+    # pygame.mixer.Sound.play(start_music)
     running = True
     while running:
         window.blit(game_bg_img, (0, 0))
         window.blit(question_img, (0, 200))
+        window.blit(money_img, (765, 70))
+
         window.blit(opt_a_img, opt_a_img_loc)
         window.blit(opt_b_img, opt_b_img_loc)
         window.blit(opt_c_img, opt_c_img_loc)
@@ -330,5 +334,4 @@ def start_window():
         pygame.display.update()
 
 
-start_window()
-# test
+game_window()
