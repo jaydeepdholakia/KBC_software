@@ -99,8 +99,8 @@ quit_txt_rect = quit_txt.get_rect()
 play_txt_rect.center = (300, 560)
 quit_txt_rect.center = (900, 560)
 
-money_list = ["0", "1,000", "2,000", "3,000", "5,000", "10,000", "20,000", "40,000", 
-            "80,000", "160,000", "320,000", "640,000", "1,250,000", "2,500,000",
+money_list = [, "1,000", "2,000", "3,000", "5,000", "10,000", "20,000", "40,000", 
+            "80,000", "160,000", "320,000", "640,000", "1,250,000", "2,500,000"
             "5,000,000", "1 Crore", "7 Crore"]
 
 def update():
@@ -134,7 +134,7 @@ def update():
     opt_c = quiz_data['options'][2]
     opt_d = quiz_data['options'][3]
     answer = quiz_data['correct_option']
-    money = money_list[question_no-1]
+    money = "5,000,000"
 
     print(question_no, answer, difficulty)
 
