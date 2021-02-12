@@ -2,6 +2,8 @@ from pytrivia import Diffculty, Type, Category, Trivia
 import random
 import time
 import textwrap
+import pickle
+import tkinter
 
 # initialising the text wrapper for question
 wrapper = textwrap.TextWrapper(width=60)
@@ -51,8 +53,18 @@ def get_question(diffculty):
     
         
 if __name__ == "__main__":
-    diffculty = 2
-    for i in range(16):
-        print("rum", i, diffculty)
-        print(get_question(1))
-        time.sleep(10)
+    funny_data = {
+        "easy":[
+            {"question":"Question 1", "options":["abc", "def", "ghi", "jkl"], "correct_answer": "def"}
+        ],
+        "medium":[
+            {"question":"Question 1", "options":["abc", "def", "ghi", "jkl"], "correct_answer": "def"}
+        ],
+        "hard":[
+            {"question":"Question 1", "options":["abc", "def", "ghi", "jkl"], "correct_answer": "def"}
+        ]
+    }
+
+    with open("funny_question_data.pickle", "wb") as file:
+        x = pickle.dump(funny_data, file, protocol=pickle.HIGHEST_PROTOCOL)
+        print(x)
