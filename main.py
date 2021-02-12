@@ -150,7 +150,11 @@ def update():
     opt_d_char_txt_rect.center = (680, 540)
 
     # Fetch questiondata accorind to difficulty store them into respective variable
-    quiz_data = quiz.get_question(difficulty)
+    if funny:
+        quiz_data = quiz.get_funny_question(difficulty)
+    else:
+        quiz_data = quiz.get_question(difficulty)
+
     question = quiz_data['question']
     opt_a = quiz_data['options'][0]
     opt_b = quiz_data['options'][1]

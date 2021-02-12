@@ -36,6 +36,7 @@ now just return the question data
 # this question return the quiz data in a dictionary
 
 def get_question(diffculty):
+    print("fetching from serious")
     global options, question
     while True:
         diffculty = diffculty_list[diffculty]
@@ -54,12 +55,16 @@ def get_question(diffculty):
                 return {'question':question, 'options': options, 'correct_option':correct_option}
 
 def get_funny_question(diffculty):
+    print("Fetching from funny")
+    return {'question':"question", 'options': ["options", "options", "options", "options"], 'correct_option':'a'}
+
     with open("funny_question_data.pickle", "rb") as file:
         funny_data = pickle.load(file)
 
     queston_list = funny_data[diffculty_list1[diffculty]]
     queston_data = queston_list[random.randint(0, len(queston_list)-1)]
     question = queston_data["question"]
+    question = wrapper.wrap(text=question)
     options = queston_data["options"]
     random.shuffle(options)
     correct_option = option_list[options.index(queston_data["correct_answer"])]
