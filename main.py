@@ -16,6 +16,7 @@ gold = (218, 165, 32)
 black = (0, 0, 0)
 grey = (90, 90, 90)
 funny = False
+startup = True
 money_list = ["0", "1,000", "2,000", "3,000", "5,000", "10,000", "20,000", "40,000", 
             "80,000", "160,000", "320,000", "640,000", "1,250,000", "2,500,000",
             "5,000,000", "1 Crore"]
@@ -218,8 +219,7 @@ def update():
     }
     
 # calling update to initialise everything in the startup 
-# TODO uncommenti thsi
-# update()
+update()
 
 # This function check if your answer was correct or wrong and do stuff accordingly
 def check(opt, ans):
@@ -294,7 +294,7 @@ def lock(opt):
 # This is the function which whow everythin in the main game window
 def game_window():
     pos = (0, 0)
-    # pygame.mixer.Sound.play(start_music)
+    pygame.mixer.Sound.play(start_music)
     running = True
     while running:
         window.blit(game_bg_img, (0, 0))
@@ -365,9 +365,11 @@ def game_window():
 
 # This the function which show the starting screen (Play, Quit)
 def start_window():
-    global funny
+    global funny, startup
     pos = (0, 0)
-    update()
+    if not startup:
+        update()
+        startup = not startup
     while True:
 
         window.blit(intro_img, (0, 0))
@@ -384,6 +386,11 @@ def start_window():
 
         if is_over(pos, play_img_loc, play_img.get_size(), 60):
             window.blit(play_img_over, play_img_loc)
+        
+        window.blit(play_txt, play_txt_rect)
+        window.blit(quit_txt, quit_txt_rect)
+        window.blit(funny_txt, funny_txt_rect)
+        window.blit(serious_txt, serious_txt_rect)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -394,6 +401,7 @@ def start_window():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if is_over(pos, swithc_loc, left_sw.get_size(), 0):
                     funny = not funny
+                    update()
 
                 if is_over(pos, play_img_loc, play_img.get_size(), 60):
                     game_window()
@@ -401,18 +409,14 @@ def start_window():
                 if is_over(pos, quit_img_loc, quit_img.get_size(), 60):
                     exit()
 
-        window.blit(play_txt, play_txt_rect)
-        window.blit(quit_txt, quit_txt_rect)
-        window.blit(funny_txt, funny_txt_rect)
-        window.blit(serious_txt, serious_txt_rect)
 
         pygame.display.update()
 
 # Roll the inro in the startup 
-# window.blit(intro_img, (0, 0))
-# pygame.display.update()
-# pygame.mixer.Sound.play(intro_music)
-# pygame.time.delay(6000)
+window.blit(intro_img, (0, 0))
+pygame.display.update()
+pygame.mixer.Sound.play(intro_music)
+pygame.time.delay(6000)
 
 # start the game
 start_window()
