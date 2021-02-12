@@ -89,10 +89,16 @@ opt_font = pygame.font.Font('fonts/RobotoSlab-Medium.ttf', 35)
 rupee_font = pygame.font.Font('fonts/Indian Rupee.ttf', 30)
 play_txt = intro_font.render('Play', True, white)
 quit_txt = intro_font.render('Quit', True, white)
+funny_txt = opt_char_font.render("Funny", True, white)
+serious_txt = opt_char_font.render("Serious", True, white)
 play_txt_rect = play_txt.get_rect()
 quit_txt_rect = quit_txt.get_rect()
+funny_txt_rect = funny_txt.get_rect()
+serious_txt_rect = serious_txt.get_rect()
 play_txt_rect.center = (300, 510)
 quit_txt_rect.center = (900, 510)
+funny_txt_rect.center = (450, 625)
+serious_txt_rect.center = (750, 625)
 
 
 # This function tell if the mouse is over any button or image
@@ -384,7 +390,6 @@ def start_window():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if is_over(pos, swithc_loc, left_sw.get_size(), 0):
                     funny = not funny
-                    print(funny)
 
                 if is_over(pos, play_img_loc, play_img.get_size(), 60):
                     game_window()
@@ -394,6 +399,8 @@ def start_window():
 
         window.blit(play_txt, play_txt_rect)
         window.blit(quit_txt, quit_txt_rect)
+        window.blit(funny_txt, funny_txt_rect)
+        window.blit(serious_txt, serious_txt_rect)
 
         pygame.display.update()
 
