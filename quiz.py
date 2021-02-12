@@ -53,6 +53,20 @@ def get_question(diffculty):
             if len(options[0]) < 22 and len(options[1]) < 22 and len(options[2]) < 22 and len(options[3]) < 22 and len(question) < 3:
                 return {'question':question, 'options': options, 'correct_option':correct_option}
 
+def get_funny_question(diffculty):
+    with open("funny_question_data.pickle", "rb") as file:
+        funny_data = pickle.load(file)
+
+    print(diffculty_list1[diffculty])
+    queston_list = funny_data[diffculty_list1[diffculty]]
+    queston_data = queston_list[random.randint(0, len(queston_list)-1)]
+    question = queston_data["question"]
+    options = queston_data["options"]
+    random.shuffle(options)
+    correct_option = option_list[options.index(queston_data["correct_answer"])]
+    return {'question':question, 'options': options, 'correct_option':correct_option}
+
+
 def print_funny_question():
     with open("funny_question_data.pickle", "rb") as file:
         funny_data = pickle.load(file)
@@ -160,4 +174,5 @@ if __name__ == "__main__":
 
     root.mainloop()
         
+
 
