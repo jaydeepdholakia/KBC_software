@@ -107,7 +107,7 @@ def add_funny_question():
     with open("funny_question_data.pickle", "rb") as file:
         funny_data = pickle.load(file)
 
-    question_data = {'question':question, 'options': option_list, 'correct_answer':correct_answer}
+    question_data = {'question':question, 'options': options, 'correct_answer':correct_answer}
     funny_data[diffculty_list1[difficulty-1]].append(question_data)
 
     with open("funny_question_data.pickle", "wb") as file:
