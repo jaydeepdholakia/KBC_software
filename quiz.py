@@ -53,18 +53,6 @@ def get_question(diffculty):
     
         
 if __name__ == "__main__":
-    funny_data = {
-        "easy":[
-            {"question":"Question 1", "options":["abc", "def", "ghi", "jkl"], "correct_answer": "def"}
-        ],
-        "medium":[
-            {"question":"Question 1", "options":["abc", "def", "ghi", "jkl"], "correct_answer": "def"}
-        ],
-        "hard":[
-            {"question":"Question 1", "options":["abc", "def", "ghi", "jkl"], "correct_answer": "def"}
-        ]
-    }
-
-    with open("funny_question_data.pickle", "wb") as file:
-        x = pickle.dump(funny_data, file, protocol=pickle.HIGHEST_PROTOCOL)
-        print(x)
+    with open("funny_question_data.pickle", "rb") as file:
+        funny_data = pickle.load(file)
+    print(funny_data)
