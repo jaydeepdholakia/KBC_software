@@ -22,7 +22,7 @@ option_list = ['a', 'b', 'c', 'd']
 
 diffculty_list = [Diffculty.Easy, Diffculty.Medium, Diffculty.Hard]
 diffculty_list1 = ["easy", "medium", "hard"]
-
+previous_question_list = []
 
 """
 This is how the get question works, first get the difficulty from the diffculty_list 
@@ -56,14 +56,17 @@ def get_question(diffculty):
 def get_funny_question(diffculty):
     with open("funny_question_data.pickle", "rb") as file:
         funny_data = pickle.load(file)
-
-    queston_list = funny_data[diffculty_list1[diffculty]]
-    queston_data = queston_list[random.randint(0, len(queston_list)-1)]
-    question = queston_data["question"]
-    question = wrapper.wrap(text=question)
-    options = queston_data["options"]
-    random.shuffle(options)
-    correct_option = option_list[options.index(queston_data["correct_answer"])]
+    while True:
+        queston_list = funny_data[diffculty_list1[diffculty]]
+        queston_data = queston_list[random.randint(0, len(queston_list)-1)]
+        question = queston_data["question"]
+        question = wrapper.wrap(text=question)
+        options = queston_data["options"]
+        random.shuffle(options)
+        correct_option = option_list[options.index(queston_data["correct_answer"])]
+        if not question in previous_question_list:
+            previous_question_list.append(question)
+            break
     return {'question':question, 'options': options, 'correct_option':correct_option}
 
 
