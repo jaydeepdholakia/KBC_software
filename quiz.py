@@ -57,7 +57,6 @@ def get_funny_question(diffculty):
     with open("funny_question_data.pickle", "rb") as file:
         funny_data = pickle.load(file)
 
-    print(diffculty_list1[diffculty])
     queston_list = funny_data[diffculty_list1[diffculty]]
     queston_data = queston_list[random.randint(0, len(queston_list)-1)]
     question = queston_data["question"]
