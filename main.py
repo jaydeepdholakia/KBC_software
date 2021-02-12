@@ -15,6 +15,8 @@ blue = (0, 0, 128)
 gold = (218, 165, 32)
 black = (0, 0, 0)
 grey = (90, 90, 90)
+funny = False
+startup = True
 money_list = ["0", "1,000", "2,000", "3,000", "5,000", "10,000", "20,000", "40,000", 
             "80,000", "160,000", "320,000", "640,000", "1,250,000", "2,500,000",
             "5,000,000", "1 Crore"]
@@ -39,6 +41,9 @@ play_img = pygame.image.load("images/play.png")
 quit_img = pygame.image.load("images/quit.png")
 quit_img_over = pygame.image.load("images/quit_over.png")
 play_img_over = pygame.image.load("images/quit_over.png")
+left_sw = pygame.image.load("images/left_sw.png")
+right_sw = pygame.image.load("images/right_sw.png")
+
 game_bg_img = pygame.image.load("images/bg.png")
 question_img = pygame.image.load("images/question.png")
 
@@ -68,12 +73,13 @@ opt_b_img_correct = pygame.image.load("images/opt_r_correct.png")
 opt_c_img_correct = pygame.image.load("images/opt_l_correct.png")
 opt_d_img_correct = pygame.image.load("images/opt_r_correct.png")
 
-quit_img_loc = (play_img.get_width(), 500)
-play_img_loc = (0, 500)
+quit_img_loc = (play_img.get_width(), 450)
+play_img_loc = (0, 450)
 opt_a_img_loc = (0, 400)
 opt_b_img_loc = (600, 400)
 opt_c_img_loc = (0, 500)
 opt_d_img_loc = (600, 500)
+swithc_loc = (550, 580)
 
 # Imporing the fonts and initialising the text
 intro_font = pygame.font.Font('fonts/RobotoSlab-Medium.ttf', 80)
@@ -84,10 +90,16 @@ opt_font = pygame.font.Font('fonts/RobotoSlab-Medium.ttf', 35)
 rupee_font = pygame.font.Font('fonts/Indian Rupee.ttf', 30)
 play_txt = intro_font.render('Play', True, white)
 quit_txt = intro_font.render('Quit', True, white)
+funny_txt = opt_char_font.render("Funny", True, white)
+serious_txt = opt_char_font.render("Serious", True, white)
 play_txt_rect = play_txt.get_rect()
 quit_txt_rect = quit_txt.get_rect()
-play_txt_rect.center = (300, 560)
-quit_txt_rect.center = (900, 560)
+funny_txt_rect = funny_txt.get_rect()
+serious_txt_rect = serious_txt.get_rect()
+play_txt_rect.center = (300, 510)
+quit_txt_rect.center = (900, 510)
+funny_txt_rect.center = (450, 625)
+serious_txt_rect.center = (750, 625)
 
 
 # This function tell if the mouse is over any button or image
@@ -139,7 +151,11 @@ def update():
     opt_d_char_txt_rect.center = (680, 540)
 
     # Fetch questiondata accorind to difficulty store them into respective variable
-    quiz_data = quiz.get_question(difficulty)
+    if funny:
+        quiz_data = quiz.get_funny_question(difficulty)
+    else:
+        quiz_data = quiz.get_question(difficulty)
+
     question = quiz_data['question']
     opt_a = quiz_data['options'][0]
     opt_b = quiz_data['options'][1]
@@ -202,7 +218,7 @@ def update():
         "d": [opt_d, opt_d_img_lock, opt_d_img_wrong, opt_d_img_correct, opt_d_img_loc, opt_d_txt_rect, opt_d_char_txt_rect]
     }
     
-# calling update to initialise everything in the startup
+# calling update to initialise everything in the startup 
 update()
 
 # This function check if your answer was correct or wrong and do stuff accordingly
@@ -349,19 +365,32 @@ def game_window():
 
 # This the function which show the starting screen (Play, Quit)
 def start_window():
+    global funny, startup
     pos = (0, 0)
-    update()
+    if not startup:
+        update()
+        startup = not startup
     while True:
 
         window.blit(intro_img, (0, 0))
         window.blit(quit_img, quit_img_loc)
         window.blit(play_img, play_img_loc)
+        if funny:
+            window.blit(left_sw, swithc_loc)
+        else:
+            window.blit(right_sw, swithc_loc)
+            
 
         if is_over(pos, quit_img_loc, quit_img.get_size(), 60):
             window.blit(quit_img_over, quit_img_loc)
 
         if is_over(pos, play_img_loc, play_img.get_size(), 60):
             window.blit(play_img_over, play_img_loc)
+        
+        window.blit(play_txt, play_txt_rect)
+        window.blit(quit_txt, quit_txt_rect)
+        window.blit(funny_txt, funny_txt_rect)
+        window.blit(serious_txt, serious_txt_rect)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -370,6 +399,9 @@ def start_window():
             pos = pygame.mouse.get_pos()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
+                if is_over(pos, swithc_loc, left_sw.get_size(), 0):
+                    funny = not funny
+                    update()
 
                 if is_over(pos, play_img_loc, play_img.get_size(), 60):
                     game_window()
@@ -377,8 +409,6 @@ def start_window():
                 if is_over(pos, quit_img_loc, quit_img.get_size(), 60):
                     exit()
 
-        window.blit(play_txt, play_txt_rect)
-        window.blit(quit_txt, quit_txt_rect)
 
         pygame.display.update()
 
