@@ -2,7 +2,11 @@ from pytrivia import Diffculty, Type, Category, Trivia
 import random
 import time
 import textwrap
-wrapper = textwrap.TextWrapper(width=60) 
+
+# initialising the text wrapper for question
+wrapper = textwrap.TextWrapper(width=60)
+
+# initialising the trivia
 my_api = Trivia(True)
 
 category_list = [Category.Animals, Category.Sports, Category.Books,Category.Art, 
@@ -12,7 +16,20 @@ category_list = [Category.Animals, Category.Sports, Category.Books,Category.Art,
                 Category.Geography, Category.Politics, Category.Vehicles ]
 
 option_list = ['a', 'b', 'c', 'd']
+
 diffculty_list = [Diffculty.Easy, Diffculty.Medium, Diffculty.Hard]
+
+
+"""
+This is how the get question works, first get the difficulty from the diffculty_list 
+get a random category from category_list 
+now request for 5 question of that category and difficulty
+Extract the list of question data from the response
+now the result list has 5 queston data loop though them and if your the the questiona ans its
+option of desired lenght break out of the for loop
+now just return the question data
+"""
+# this question return the quiz data in a dictionary
 
 def get_question(diffculty):
     global options, question
